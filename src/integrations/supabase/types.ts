@@ -14,16 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      academic_events: {
+        Row: {
+          category: Database["public"]["Enums"]["event_category"]
+          created_at: string
+          description: string
+          event_date: string
+          id: string
+          target_grade: number | null
+          title: string
+        }
+        Insert: {
+          category?: Database["public"]["Enums"]["event_category"]
+          created_at?: string
+          description?: string
+          event_date: string
+          id?: string
+          target_grade?: number | null
+          title: string
+        }
+        Update: {
+          category?: Database["public"]["Enums"]["event_category"]
+          created_at?: string
+          description?: string
+          event_date?: string
+          id?: string
+          target_grade?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      assignments: {
+        Row: {
+          class_no: number
+          content: string
+          created_at: string
+          due_date: string | null
+          grade: number
+          id: string
+          subject: string
+          title: string
+        }
+        Insert: {
+          class_no: number
+          content?: string
+          created_at?: string
+          due_date?: string | null
+          grade: number
+          id?: string
+          subject: string
+          title: string
+        }
+        Update: {
+          class_no?: number
+          content?: string
+          created_at?: string
+          due_date?: string | null
+          grade?: number
+          id?: string
+          subject?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      notices: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          is_important: boolean
+          target_grade: number | null
+          title: string
+        }
+        Insert: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_important?: boolean
+          target_grade?: number | null
+          title: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          is_important?: boolean
+          target_grade?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      suggestions: {
+        Row: {
+          author_name: string
+          content: string
+          created_at: string
+          id: string
+          status: Database["public"]["Enums"]["suggestion_status"]
+          title: string
+        }
+        Insert: {
+          author_name?: string
+          content: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["suggestion_status"]
+          title: string
+        }
+        Update: {
+          author_name?: string
+          content?: string
+          created_at?: string
+          id?: string
+          status?: Database["public"]["Enums"]["suggestion_status"]
+          title?: string
+        }
+        Relationships: []
+      }
+      timetable_entries: {
+        Row: {
+          class_no: number
+          created_at: string
+          grade: number
+          id: string
+          period: number
+          subject: string
+          weekday: number
+        }
+        Insert: {
+          class_no: number
+          created_at?: string
+          grade: number
+          id?: string
+          period: number
+          subject: string
+          weekday: number
+        }
+        Update: {
+          class_no?: number
+          created_at?: string
+          grade?: number
+          id?: string
+          period?: number
+          subject?: string
+          weekday?: number
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: { Args: never; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
+      event_category: "exam" | "event" | "holiday" | "school" | "etc"
+      suggestion_status: "pending" | "in_progress" | "done"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +326,10 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+      event_category: ["exam", "event", "holiday", "school", "etc"],
+      suggestion_status: ["pending", "in_progress", "done"],
+    },
   },
 } as const
