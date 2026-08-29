@@ -1,27 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-
-export type MealResult = {
-  status: "ok" | "none" | "error";
-  date: string;
-  dishes: string[];
-  calorie?: string;
-  nutrition?: string;
-  origin?: string;
-  message?: string;
-};
-
-function cleanDishes(raw: string): string[] {
-  return raw
-    .split(/<br\s*\/?>/i)
-    .map((line) =>
-      line
-        .replace(/\([^)]*\)/g, "")
-        .replace(/[0-9.]+$/g, "")
-        .replace(/\s+/g, " ")
-        .trim(),
-    )
-    .filter(Boolean);
-}
+import { cleanDishes, MEAL_ERROR_MESSAGE, type MealResult } from "./meal-utils";
 
 export const getMeal = createServerFn({ method: "GET" })
   .inputValidator((data: { date: string }) => {
@@ -33,11 +11,14 @@ export const getMeal = createServerFn({ method: "GET" })
   .handler(async ({ data }): Promise<MealResult> => {
     const key = process.env["NEIS_API_KEY"];
     const ymd = data.date.replace(/-/g, "");
-    const base: MealResult = { status: "error", date: data.date, dishes: [] };
+    const errorResult: MealResult = {
+      status: "error",
+      date: data.date,
+      dishes: [],
+      message: MEAL_ERROR_MESSAGE,
+    };
 
-    if (!key) {
-      return { ...base, message: "급식 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요." };
-    }
+    if (!key) return errorResult;
 
     try {
       let officeCode = process.env["NEIS_ATPT_CODE"];
@@ -47,16 +28,9 @@ export const getMeal = createServerFn({ method: "GET" })
         const infoUrl = `https://open.neis.go.kr/hub/schoolInfo?KEY=${key}&Type=json&pIndex=1&pSize=10&SCHUL_NM=${encodeURIComponent("성지중학교")}`;
         const infoRes = await fetch(infoUrl);
         const infoJson = (await infoRes.json()) as Record<string, unknown>;
-        const rows = (infoJson["schoolInfo"] as Array<Record<string, unknown>> | undefined)?.[1]?.[
-          "row"
-        ] as Array<Record<string, string>> | undefined;
-        const school = rows?.[0];
-        if (!school) {
-          return {
-            ...base,
-            message: "급식 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.",
-          };
-        }
+        const infoBlocks = infoJson["schoolInfo"] as Array<Record<string, unknown>> | undefined;
+        const school = (infoBlocks?.[1]?.["row"] as Array<Record<string, string>> | undefined)?.[0];
+        if (!school) return errorResult;
         officeCode = school["ATPT_OFCDC_SC_CODE"];
         schoolCode = school["SD_SCHUL_CODE"];
       }
@@ -64,10 +38,8 @@ export const getMeal = createServerFn({ method: "GET" })
       const url = `https://open.neis.go.kr/hub/mealServiceDietInfo?KEY=${key}&Type=json&pIndex=1&pSize=10&ATPT_OFCDC_SC_CODE=${officeCode}&SD_SCHUL_CODE=${schoolCode}&MLSV_YMD=${ymd}&MMEAL_SC_CODE=2`;
       const res = await fetch(url);
       const json = (await res.json()) as Record<string, unknown>;
-
-      const rows = (json["mealServiceDietInfo"] as Array<Record<string, unknown>> | undefined)?.[1]?.[
-        "row"
-      ] as Array<Record<string, string>> | undefined;
+      const blocks = json["mealServiceDietInfo"] as Array<Record<string, unknown>> | undefined;
+      const rows = blocks?.[1]?.["row"] as Array<Record<string, string>> | undefined;
 
       if (!rows || rows.length === 0) {
         return { status: "none", date: data.date, dishes: [] };
@@ -83,6 +55,6 @@ export const getMeal = createServerFn({ method: "GET" })
         origin: row["ORPLC_INFO"]?.replace(/<br\s*\/?>/gi, " · "),
       };
     } catch {
-      return { ...base, message: "급식 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요." };
+      return errorResult;
     }
   });
