@@ -49,7 +49,7 @@ function SuggestionsPage() {
   return (
     <AppShell>
       <PageTitle title="건의함" description="학교에 바라는 점을 자유롭게 남겨주세요." />
-      <form onSubmit={submit} className="card-surface grid gap-3 p-5">
+      <form onSubmit={submit} className="card-surface grid gap-4 p-5">
         <label className="grid gap-1 text-sm font-semibold">
           제목
           <input
@@ -57,7 +57,7 @@ function SuggestionsPage() {
             onChange={(e) => setTitle(e.target.value)}
             required
             maxLength={100}
-            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-normal outline-none focus:border-primary"
+            className="rounded-2xl bg-secondary px-4 py-3.5 text-[15px] font-medium outline-none ring-primary transition focus:bg-card focus:ring-2"
             placeholder="건의 제목"
           />
         </label>
@@ -69,7 +69,7 @@ function SuggestionsPage() {
             required
             rows={6}
             maxLength={2000}
-            className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-normal outline-none focus:border-primary"
+            className="rounded-2xl bg-secondary px-4 py-3.5 text-[15px] font-medium outline-none ring-primary transition focus:bg-card focus:ring-2"
             placeholder="자세한 내용을 적어주세요"
           />
         </label>
@@ -89,7 +89,7 @@ function SuggestionsPage() {
               value={author}
               onChange={(e) => setAuthor(e.target.value)}
               maxLength={30}
-              className="rounded-xl border border-border bg-background px-3 py-2 text-sm font-normal outline-none focus:border-primary"
+              className="rounded-2xl bg-secondary px-4 py-3.5 text-[15px] font-medium outline-none ring-primary transition focus:bg-card focus:ring-2"
               placeholder="예: 1학년 3반 김성지"
             />
           </label>
@@ -97,7 +97,7 @@ function SuggestionsPage() {
         <button
           type="submit"
           disabled={state === "sending"}
-          className="rounded-xl bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
+          className="pressable rounded-2xl bg-primary px-4 py-4 text-[16px] font-bold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
         >
           {state === "sending" ? "보내는 중..." : "건의하기"}
         </button>

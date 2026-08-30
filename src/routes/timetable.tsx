@@ -59,12 +59,12 @@ function TimetablePage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[320px] text-center text-sm">
               <thead>
-                <tr className="bg-secondary text-secondary-foreground">
-                  <th className="w-14 py-2.5 text-xs font-semibold">교시</th>
+                <tr className="bg-muted text-muted-foreground">
+                  <th className="w-14 py-3 text-xs font-bold">교시</th>
                   {WEEKDAYS.map((d) => (
                     <th
                       key={d.value}
-                      className={cn("py-2.5 text-xs font-semibold", d.value === today && "text-primary")}
+                      className={cn("py-3 text-xs font-bold", d.value === today && "text-primary")}
                     >
                       {d.short}
                     </th>
@@ -73,13 +73,13 @@ function TimetablePage() {
               </thead>
               <tbody>
                 {PERIODS.map((p) => (
-                  <tr key={p} className="border-t border-border">
-                    <td className="bg-muted py-3 text-xs font-semibold text-muted-foreground">{p}</td>
+                  <tr key={p} className="border-t border-border/70">
+                    <td className="bg-muted/60 py-3.5 text-xs font-bold text-muted-foreground">{p}</td>
                     {WEEKDAYS.map((d) => (
                       <td
                         key={d.value}
                         className={cn(
-                          "px-1 py-3 text-[13px]",
+                          "px-1 py-3.5 text-[14px] font-medium",
                           d.value === today && "bg-accent/50 font-semibold",
                         )}
                       >
