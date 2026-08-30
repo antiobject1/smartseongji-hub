@@ -36,14 +36,14 @@ function Card({
   children: React.ReactNode;
 }) {
   return (
-    <section className="card-surface p-4">
-      <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-sm font-bold">{title}</h2>
-        <Link to={to} className="text-xs font-semibold text-primary">
-          더보기
+    <section className="card-surface p-5">
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-[15px] font-bold">{title}</h2>
+        <Link to={to} className="text-xs font-bold text-muted-foreground hover:text-primary">
+          더보기 ›
         </Link>
       </div>
-      {children}
+      <div className="text-[15px] font-medium leading-relaxed">{children}</div>
     </section>
   );
 }
