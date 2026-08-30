@@ -44,32 +44,34 @@ export function AppShell({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20 md:pb-0">
-      <header className="hero-gradient sticky top-0 z-30 text-primary-foreground shadow-soft">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3">
+    <div className="min-h-screen bg-background pb-24 md:pb-0">
+      <header className="sticky top-0 z-30 bg-card">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-5 py-3.5">
           <div className="min-w-0">
-            <p className="text-lg font-bold leading-tight">스마트 성지</p>
-            <p className="truncate text-xs opacity-90">
+            <p className="text-[17px] font-bold leading-tight">스마트 성지</p>
+            <p className="truncate text-xs text-muted-foreground">
               {SCHOOL_NAME} · {selection.grade}학년 {selection.classNo}반
             </p>
           </div>
           <Link
             to="/"
             search={{ change: true }}
-            className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-white/15 px-3 py-2 text-xs font-semibold backdrop-blur transition-colors hover:bg-white/25"
+            className="pressable inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-secondary px-3 py-2 text-xs font-bold text-secondary-foreground hover:bg-accent hover:text-accent-foreground"
           >
             <Repeat className="size-3.5" />
             학년/반 변경
           </Link>
         </div>
-        <nav className="mx-auto hidden max-w-5xl gap-1 px-2 pb-2 md:flex">
+        <nav className="mx-auto hidden max-w-5xl gap-1 px-4 pb-2.5 md:flex">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-medium transition-colors",
-                pathname === item.to ? "bg-white/25" : "hover:bg-white/15",
+                "rounded-xl px-3.5 py-2 text-sm font-bold transition-colors",
+                pathname === item.to
+                  ? "bg-accent text-accent-foreground"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground",
               )}
             >
               {item.label}
@@ -78,9 +80,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         </nav>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl px-4 py-5">{children}</main>
+      <main className="mx-auto w-full max-w-5xl px-5 py-5">{children}</main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-border bg-card/95 backdrop-blur md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 bg-card pb-[env(safe-area-inset-bottom)] shadow-[0_-1px_0_0_var(--color-border)] md:hidden">
         <div className="grid grid-cols-7">
           {NAV_ITEMS.map((item) => {
             const Icon = item.icon;
@@ -90,11 +92,11 @@ export function AppShell({ children }: { children: ReactNode }) {
                 key={item.to}
                 to={item.to}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 py-2 text-[10px] font-medium transition-colors",
+                  "pressable flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold transition-colors",
                   active ? "text-primary" : "text-muted-foreground",
                 )}
               >
-                <Icon className="size-5" />
+                <Icon className={cn("size-[22px]", active && "stroke-[2.4]")} />
                 {item.label}
               </Link>
             );
@@ -113,9 +115,11 @@ export function PageTitle({
   description?: string | undefined;
 }) {
   return (
-    <div className="mb-4">
-      <h1 className="text-xl font-bold tracking-tight">{title}</h1>
-      {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
+    <div className="mb-5 mt-1">
+      <h1 className="text-[26px] font-extrabold leading-tight tracking-[-0.03em]">{title}</h1>
+      {description ? (
+        <p className="mt-1.5 text-sm font-medium text-muted-foreground">{description}</p>
+      ) : null}
     </div>
   );
 }
