@@ -105,7 +105,13 @@ export function AppShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function PageTitle({ title, description }: { title: string; description?: string }) {
+export function PageTitle({
+  title,
+  description,
+}: {
+  title: string;
+  description?: string | undefined;
+}) {
   return (
     <div className="mb-4">
       <h1 className="text-xl font-bold tracking-tight">{title}</h1>

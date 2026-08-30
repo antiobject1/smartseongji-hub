@@ -46,13 +46,16 @@ export const getMeal = createServerFn({ method: "GET" })
       }
 
       const row = rows[0]!;
+      const calorie = row["CAL_INFO"];
+      const nutrition = row["NTR_INFO"]?.replace(/<br\s*\/?>/gi, " · ");
+      const origin = row["ORPLC_INFO"]?.replace(/<br\s*\/?>/gi, " · ");
       return {
         status: "ok",
         date: data.date,
         dishes: cleanDishes(row["DDISH_NM"] ?? ""),
-        calorie: row["CAL_INFO"],
-        nutrition: row["NTR_INFO"]?.replace(/<br\s*\/?>/gi, " · "),
-        origin: row["ORPLC_INFO"]?.replace(/<br\s*\/?>/gi, " · "),
+        ...(calorie ? { calorie } : {}),
+        ...(nutrition ? { nutrition } : {}),
+        ...(origin ? { origin } : {}),
       };
     } catch {
       return errorResult;

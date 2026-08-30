@@ -5,9 +5,8 @@ import { classesForGrade, GRADES, SCHOOL_NAME } from "@/lib/school";
 import { readSelection, writeSelection } from "@/lib/selection";
 
 export const Route = createFileRoute("/")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    change: search["change"] === true || search["change"] === "true" ? true : undefined,
-  }),
+  validateSearch: (search: Record<string, unknown>): { change?: true } =>
+    search["change"] === true || search["change"] === "true" ? { change: true } : {},
   head: () => ({
     meta: [
       { title: "스마트 성지 · 성지중학교 학교생활 정보" },

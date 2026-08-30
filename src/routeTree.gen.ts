@@ -11,7 +11,11 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AssignmentsRouteImport } from './routes/assignments'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as MealRouteImport } from './routes/meal'
+import { Route as NoticesRouteImport } from './routes/notices'
+import { Route as SuggestionsRouteImport } from './routes/suggestions'
 import { Route as TimetableRouteImport } from './routes/timetable'
 
 const IndexRoute = IndexRouteImport.update({
@@ -24,9 +28,29 @@ const AssignmentsRoute = AssignmentsRouteImport.update({
   path: '/assignments',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MealRoute = MealRouteImport.update({
   id: '/meal',
   path: '/meal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticesRoute = NoticesRouteImport.update({
+  id: '/notices',
+  path: '/notices',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SuggestionsRoute = SuggestionsRouteImport.update({
+  id: '/suggestions',
+  path: '/suggestions',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TimetableRoute = TimetableRouteImport.update({
@@ -38,34 +62,75 @@ const TimetableRoute = TimetableRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assignments': typeof AssignmentsRoute
+  '/calendar': typeof CalendarRoute
+  '/dashboard': typeof DashboardRoute
   '/meal': typeof MealRoute
+  '/notices': typeof NoticesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/timetable': typeof TimetableRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assignments': typeof AssignmentsRoute
+  '/calendar': typeof CalendarRoute
+  '/dashboard': typeof DashboardRoute
   '/meal': typeof MealRoute
+  '/notices': typeof NoticesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/timetable': typeof TimetableRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assignments': typeof AssignmentsRoute
+  '/calendar': typeof CalendarRoute
+  '/dashboard': typeof DashboardRoute
   '/meal': typeof MealRoute
+  '/notices': typeof NoticesRoute
+  '/suggestions': typeof SuggestionsRoute
   '/timetable': typeof TimetableRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/assignments' | '/meal' | '/timetable'
+  fullPaths:
+    | '/'
+    | '/assignments'
+    | '/calendar'
+    | '/dashboard'
+    | '/meal'
+    | '/notices'
+    | '/suggestions'
+    | '/timetable'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/assignments' | '/meal' | '/timetable'
-  id: '__root__' | '/' | '/assignments' | '/meal' | '/timetable'
+  to:
+    | '/'
+    | '/assignments'
+    | '/calendar'
+    | '/dashboard'
+    | '/meal'
+    | '/notices'
+    | '/suggestions'
+    | '/timetable'
+  id:
+    | '__root__'
+    | '/'
+    | '/assignments'
+    | '/calendar'
+    | '/dashboard'
+    | '/meal'
+    | '/notices'
+    | '/suggestions'
+    | '/timetable'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssignmentsRoute: typeof AssignmentsRoute
+  CalendarRoute: typeof CalendarRoute
+  DashboardRoute: typeof DashboardRoute
   MealRoute: typeof MealRoute
+  NoticesRoute: typeof NoticesRoute
+  SuggestionsRoute: typeof SuggestionsRoute
   TimetableRoute: typeof TimetableRoute
 }
 
@@ -85,11 +150,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AssignmentsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/meal': {
       id: '/meal'
       path: '/meal'
       fullPath: '/meal'
       preLoaderRoute: typeof MealRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notices': {
+      id: '/notices'
+      path: '/notices'
+      fullPath: '/notices'
+      preLoaderRoute: typeof NoticesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suggestions': {
+      id: '/suggestions'
+      path: '/suggestions'
+      fullPath: '/suggestions'
+      preLoaderRoute: typeof SuggestionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/timetable': {
@@ -105,7 +198,11 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssignmentsRoute: AssignmentsRoute,
+  CalendarRoute: CalendarRoute,
+  DashboardRoute: DashboardRoute,
   MealRoute: MealRoute,
+  NoticesRoute: NoticesRoute,
+  SuggestionsRoute: SuggestionsRoute,
   TimetableRoute: TimetableRoute,
 }
 export const routeTree = rootRouteImport
