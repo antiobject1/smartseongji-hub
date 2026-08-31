@@ -9,7 +9,7 @@ export default defineConfig({
   },
   // GitHub Pages 정적 배포: nitro(Cloudflare) 대신 Node 서버 빌드로
   // prerender가 동작하도록 하고, 라우트를 정적 HTML로 출력한다.
-  nitro: isGithubPages ? false : undefined,
+  ...(isGithubPages ? { nitro: false as const } : {}),
   tanstackStart: {
     prerender: {
       enabled: isGithubPages,
